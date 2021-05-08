@@ -1,0 +1,13 @@
+baseurl: "/"
+languageCode: "en-us"
+theme: "terminal"
+module:
+    mounts:
+        source: "README.md"
+        target: "content/_index.md"
+params:
+    themeColor: "green"
+    fullWidthTheme: false
+    centerTheme: true
+    logo:
+        logoText: "Documentation"
