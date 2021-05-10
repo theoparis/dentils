@@ -11,32 +11,45 @@ export class Commander {
         return this.workingDirectory;
     }
 
+    /**
+     * Change the current working directory.
+     * @param path The new working directory path
+     */
     cd(path: string) {
-        this.workingDirectory = path;
+        this.workingDirectory =
+            path.startsWith("~/") || path.startsWith("/")
+                ? path
+                : `${this.cwd}/${path}`;
         return this;
     }
 
     /**
-     * Change the working directory relative to current working directory.
+     * This ensures that the current working directory exists.
      */
-    cdRel(path: string) {
-        this.workingDirectory = `${this.cwd}/${path}`;
-        return this;
-    }
-
     mkdir() {
         fs.ensureDirSync(this.cwd);
         return this;
     }
 
+    /**
+     * Gets list of all of the command output stored in history.
+     */
     fullOutput(): string[] {
         return this.commandOutput;
     }
 
+    /**
+     * Gets the latest command's output.
+     */
     output(): string {
         return this.fullOutput()[0];
     }
 
+    /**
+     * Runs a shell command.
+     * @param command An array of the command parameters,
+     * instead of being in one string seperated by spaces.
+     */
     run(command: string[]) {
         const cmd = Deno.run({
             cmd: command,
