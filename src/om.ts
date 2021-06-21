@@ -138,15 +138,12 @@ class Omelette extends EventEmitter {
                         : accessor(objectTree);
                 return reply(
                     ((replies: unknown) => {
-                        if (typeof replies === "function")
-                            return replies();
-                    
-                        if (Array.isArray(replies))
-                            return replies;
-                    
+                        if (typeof replies === "function") return replies();
+
+                        if (Array.isArray(replies)) return replies;
+
                         if (replies instanceof Object)
                             return Object.keys(replies);
-                    
                     })(replies)
                 );
             });
