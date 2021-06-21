@@ -17,7 +17,7 @@ const depthOf = (object: Record<string, never>) => {
 
 export type OmArgs = {
     fragment: number;
-    reply: (words: string) => void;
+    reply: (words: string[]) => void;
     line: string;
 };
 export type OmFunction = (om: OmArgs) => void;
@@ -138,15 +138,15 @@ class Omelette extends EventEmitter {
                         : accessor(objectTree);
                 return reply(
                     ((replies: unknown) => {
-                        if (typeof replies === "function") {
+                        if (typeof replies === "function")
                             return replies();
-                        }
-                        if (Array.isArray(replies)) {
+                    
+                        if (Array.isArray(replies))
                             return replies;
-                        }
-                        if (replies instanceof Object) {
+                    
+                        if (replies instanceof Object)
                             return Object.keys(replies);
-                        }
+                    
                     })(replies)
                 );
             });
